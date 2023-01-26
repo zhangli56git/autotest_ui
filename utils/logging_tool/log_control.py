@@ -10,7 +10,7 @@ from logging import handlers
 from typing import Text
 import colorlog
 import time
-from common.setting import ensure_path_sep
+from conf.setting import ensure_path_sep
 
 
 class LogHandler:
@@ -82,3 +82,5 @@ WARNING = LogHandler(ensure_path_sep(f'\\logs\\warning-{now_time_day}.log'))
 
 if __name__ == '__main__':
     ERROR.logger.error("测试")
+    INFO.logger.info("测试")
+    WARNING.logger.warning("测试")
