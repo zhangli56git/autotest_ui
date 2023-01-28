@@ -38,5 +38,5 @@ def appium_driver(appium: str):
 
 
 if __name__ == '__main__':
-    data = get_yaml_data("/conf/appium.yaml")
+    data = get_yaml_data("conf/appium.yaml")
     print(data)
