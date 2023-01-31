@@ -1,3 +1,7 @@
+"""
+常规设置
+"""
+
 import os
 from typing import Text
 
@@ -30,4 +34,5 @@ def get_yaml_data(file_path: str):
 
 # test get_yaml_data
 if __name__ == '__main__':
-    print(get_yaml_data('conf/appium.yaml'))
+    print(root_path() + "/drivers/chromedriver")
+
