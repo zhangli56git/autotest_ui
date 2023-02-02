@@ -9,8 +9,8 @@ from conf.setting import get_yaml_data
 data = get_yaml_data("/conf/appium.yaml")
 
 
-# Create an appium web driver
-def appium_driver(appium: str):
+# 启动appium服务
+def appium_conf(appium: str):
     desired_caps = {}
     if appium == "android":
         desired_caps = data["object_android"]
@@ -35,8 +35,3 @@ def appium_driver(appium: str):
     appium_url = data['APPIUM_URL']
     driver = webdriver.Remote(appium_url, desired_caps)
     return driver
-
-
-if __name__ == '__main__':
-    data = get_yaml_data("conf/appium.yaml")
-    print(data)

@@ -31,8 +31,3 @@ def get_yaml_data(file_path: str):
     yaml_path = ensure_path_sep('/') + file_path
     with open(yaml_path, "r", encoding="utf-8") as f:
         return yaml.load(f, Loader=yaml.FullLoader)
-
-# test get_yaml_data
-if __name__ == '__main__':
-    print(root_path() + "/drivers/chromedriver")
-
