@@ -1,21 +1,18 @@
 # 这是启动appium的配置文件
 # 请根据实际情况修改
 # 请勿删除注释
-object_android:
-    platformName: Android # 安卓
-    platformVersion: 7.1.1  # 安卓版本
-    deviceName:
-    appPackage: com.tencent.mm  # 微信的包名
-    appActivity: .ui.LauncherUI # 微信的启动页
-    automationName: UiAutomator2  # 使用uiautomator2
-    noReset: true # 不重置应用
-    unicodeKeyboard: true # 重置键盘
-    resetKeyboard: true # 重置键盘
-    newCommandTimeout: 600  # 超时时间
-    app: "" # apk包的路径
-    APPIUM_URL: http://127.0.1:4723/wd/hub # appium的地址
-
-object_ios:
+appium_url: http://127.0.0.4:4723/wd/hub
+android:
+    platformName: android   # android
+    platformVersion: 12 # android版本
+    deviceName: emulator-5554   # 设备名称
+    appPackage: com.kingtone.fizz
+    appActivity: com.playtimes.boba.login.SplashActivity
+    automationName: UiAutomator2    # 使用uiautomator2
+    app: /Users/zhangli56/Downloads/fizz-official-release.apk
+    noReset: false  # 不重置应用
+    newCommandTimeout: 10  # 超时时间
+ios:
     platformName: iOS # ios
     platformVersion: 11.4 # ios版本
     deviceName: iPhone 6s # 设备名称

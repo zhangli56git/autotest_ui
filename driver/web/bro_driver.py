@@ -8,7 +8,7 @@ from utils.logging_tool.log_control import WARNING
 from utils.time_tool.time_control import get_now_time_format
 
 
-class BroWindows:
+class BroDriver:
 
     # 初始化
     def __init__(self, driver: webdriver):

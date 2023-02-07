@@ -1,5 +1,5 @@
 """
-二次封装selenium的元素定位方法
+二次封装selenium元素方法
 """
 
 from selenium import webdriver
