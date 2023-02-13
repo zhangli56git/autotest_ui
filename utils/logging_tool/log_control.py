@@ -10,7 +10,10 @@ from logging import handlers
 from typing import Text
 import colorlog
 import time
-from conf.setting import ensure_path_sep
+
+from selenium.common import exceptions
+
+from conf.setting import path_sure
 
 
 class LogHandler:
@@ -55,7 +58,7 @@ class LogHandler:
         # 把对象加到logger里
         self.logger.addHandler(screen_output)
         self.logger.addHandler(time_rotating)
-        self.log_path = ensure_path_sep('\\logs\\log.log')
+        self.log_path = path_sure('\\logs\\log.log')
 
     @classmethod
     def log_color(cls):
@@ -69,18 +72,23 @@ class LogHandler:
         }
 
         formatter = colorlog.ColoredFormatter(
-            '%(log_color)s[%(asctime)s] [%(name)s] [%(levelname)s]: %(message)s',
+            # 打印格式并右对齐
+            '%(log_color)s[%(asctime)s] [%(name)s] [%(levelname)s] :%(message)s',
             log_colors=log_colors_config
         )
         return formatter
 
 
 now_time_day = time.strftime("%Y-%m-%d", time.localtime())
-INFO = LogHandler(ensure_path_sep(f"\\logs\\info-{now_time_day}.log"), level='info')
-ERROR = LogHandler(ensure_path_sep(f"\\logs\\error-{now_time_day}.log"), level='error')
-WARNING = LogHandler(ensure_path_sep(f'\\logs\\warning-{now_time_day}.log'))
+INFO = LogHandler(path_sure(f"\\logs\\info-{now_time_day}.log"), level='info')
+ERROR = LogHandler(path_sure(f"\\logs\\error-{now_time_day}.log"), level='error')
+DEBUG = LogHandler(path_sure(f"\\logs\\debug-{now_time_day}.log"), level='debug')
+CRITICAL = LogHandler(path_sure(f"\\logs\\critical-{now_time_day}.log"), level='critical')
+WARNING = LogHandler(path_sure(f'\\logs\\warning-{now_time_day}.log'), level='warning')
 
 if __name__ == '__main__':
-    ERROR.logger.error("测试")
-    INFO.logger.info("测试")
-    WARNING.logger.warning("测试")
+    INFO.logger.info("info")
+    ERROR.logger.error("error")
+    DEBUG.logger.debug("debug")
+    CRITICAL.logger.critical("critical")
+    WARNING.logger.warning("warning")

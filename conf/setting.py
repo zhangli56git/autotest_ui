@@ -14,7 +14,7 @@ def root_path():
     return path
 
 
-def ensure_path_sep(path: Text) -> Text:
+def path_sure(path: Text) -> Text:
     """兼容 windows 和 linux 不同环境的操作系统路径 """
     if "/" in path:
         path = os.sep.join(path.split("/"))
@@ -28,6 +28,11 @@ def ensure_path_sep(path: Text) -> Text:
 # 读取appium.yaml文件
 def get_yaml_data(file_path: str):
     # 获取yaml文件路径
-    yaml_path = ensure_path_sep('/') + file_path
+    yaml_path = path_sure('/') + file_path
     with open(yaml_path, "r", encoding="utf-8") as f:
         return yaml.load(f, Loader=yaml.FullLoader)
+
+
+if __name__ == '__main__':
+    # print(get_yaml_data("/conf/appium.yaml"))
+    print(get_yaml_data("conf/driver.yaml")["android"])

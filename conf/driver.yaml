@@ -1,6 +1,7 @@
 # 这是启动appium的配置文件
 # 请根据实际情况修改
 # 请勿删除注释
+browser: chrome
 appium_url: http://127.0.0.4:4723/wd/hub
 android:
     platformName: android   # android

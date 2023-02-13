@@ -2,7 +2,7 @@ import time
 
 from page_object.pages.base_page import BasePage
 from utils.logging_tool.log_control import INFO
-from utils.testdatas_tool.get_excel import GetExcelDatas, json_cl_list
+from utils.testdatas_tool.get_excel import GetExcel, excel_cell_list
 
 
 class LoginStep(BasePage):
@@ -18,7 +18,7 @@ class LoginStep(BasePage):
 
     # 是否升级
     def is_upgrade(self):
-        by_upgrade = json_cl_list(self.by_page_datas, "提示升级")
+        by_upgrade = excel_cell_list(self.by_page_datas, "提示升级")
         if self.driver.is_element_exist(by_upgrade):
             self.driver.click_element(self.by_page_datas, "提示升级")
         else:
@@ -26,7 +26,7 @@ class LoginStep(BasePage):
 
     # 确定在登录页
     def is_login_page(self):
-        by_bottom = json_cl_list(self.by_page_datas, "底部我的")
+        by_bottom = excel_cell_list(self.by_page_datas, "底部我的")
         # 定义一个布尔值
         is_bottom = self.driver.is_element_exist(by_bottom)
         # 如果is_bottom未假时执行
@@ -41,7 +41,7 @@ class LoginStep(BasePage):
     # 手机号登录
     def login_phone_step(self, phone, code) -> str:
         self.driver.click_element(self.by_page_datas, "点击登录")
-        element = self.driver.get_find_element(json_cl_list(self.by_page_datas, "点击协议"))
+        element = self.driver.get_find_element(excel_cell_list(self.by_page_datas, "点击协议"))
         if not element.is_selected():
             self.driver.click_element(self.by_page_datas, "点击协议")
         self.driver.click_element(self.by_page_datas, "手机登录")
@@ -62,7 +62,7 @@ class LoginStep(BasePage):
 
     # 首页签到按钮
     def sign_in(self):
-        if self.driver.is_element_exist(json_cl_list(self.by_page_datas, "首页签到")):
+        if self.driver.is_element_exist(excel_cell_list(self.by_page_datas, "首页签到")):
             self.driver.click_element(self.by_page_datas, "首页签到")
         else:
             INFO.logger.info("未找到签到按钮")
