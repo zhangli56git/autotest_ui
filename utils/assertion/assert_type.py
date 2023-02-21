@@ -31,18 +31,18 @@ def assert_not_equal(actual, expected, msg=None):
 
 
 # 判断实际值是否在预期值中
-def assert_in(actual, expected, msg=None):
+def assert_in(actual, expect, msg=None):
     """
     :param actual: 实际值
-    :param expected: 预期值
+    :param expect: 预期值
     :param msg: 信息
     :return: None
     """
     try:
-        assert actual in expected
+        assert actual in expect
     except AssertionError:
         if msg is None:
-            msg = "实际值: %s, 预期值: %s" % (actual, expected)
+            msg = "实际值: %s, 预期值: %s" % (actual, expect)
         raise AssertionError(msg)
 
 

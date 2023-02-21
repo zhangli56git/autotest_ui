@@ -5,6 +5,7 @@ import pandas as pd
 
 from conf.setting import root_path
 from utils.logging_tool.log_control import INFO, ERROR, DEBUG
+from utils.testdatas_tool.set_datas import list_bys
 
 
 class GetExcel:
@@ -50,13 +51,5 @@ class GetExcel:
 
 if __name__ == '__main__':
     get_excel = GetExcel(file_name="test_data.xlsx")
-    data = get_excel.get_excel_sheet_cells(sheet_name="login", up='D2', down='D2')
-    # data转json
-    data = json.loads(str(data))
-    # 遍历data
-    for key, value in data.items():
-        print("key=>{k};value=>{v}".format(k=key, v=value))
-        if key in '点击':
-            print("点击")
-        elif key in '输入':
-            print("输入")
+    data = get_excel.get_excel_sheet_cells(sheet_name="login", up='E2', down='F3')
+    print(data)

@@ -35,4 +35,4 @@ def get_yaml_data(file_path: str):
 
 if __name__ == '__main__':
     # print(get_yaml_data("/conf/appium.yaml"))
-    print(get_yaml_data("conf/driver.yaml")["android"])
+    print(get_yaml_data("conf/page_driver.yaml")["android"])

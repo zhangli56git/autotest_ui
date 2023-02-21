@@ -6,7 +6,7 @@ appium_url: http://127.0.0.4:4723/wd/hub
 android:
     platformName: android   # android
     platformVersion: 12 # android版本
-    deviceName: emulator-5554   # 设备名称
+    deviceName: emulator-5554
     appPackage: com.kingtone.fizz
     appActivity: com.playtimes.boba.login.SplashActivity
     automationName: UiAutomator2    # 使用uiautomator2

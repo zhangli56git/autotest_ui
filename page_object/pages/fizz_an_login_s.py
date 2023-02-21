@@ -1,8 +1,9 @@
 import time
 
-from page_object.pages.base_page import BasePage
+from driver.driver_element import *
+from page_object.base_page import BasePage
 from utils.logging_tool.log_control import INFO
-from utils.testdatas_tool.get_excel import GetExcel, excel_cell_list
+from utils.testdatas_tool.set_datas import list_bys
 
 
 class LoginStep(BasePage):
@@ -10,59 +11,77 @@ class LoginStep(BasePage):
     fizz登录步骤页，加载固定页面by
     """
 
-    # 初始化
-    def __init__(self, driver, by_page_datas):
-        super().__init__(driver)
-        self.by_page_datas = by_page_datas
-        INFO.logger.info("\n" + self.by_page_datas)
+    def __init__(self, login_page_driver, login_page_bys):
+        super().__init__(login_page_driver, login_page_bys)
 
-    # 是否升级
-    def is_upgrade(self):
-        by_upgrade = excel_cell_list(self.by_page_datas, "提示升级")
-        if self.driver.is_element_exist(by_upgrade):
-            self.driver.click_element(self.by_page_datas, "提示升级")
-        else:
-            print("无升级提示")
+    def page_ele(self, by_name) -> WebElement:
+        pass
 
-    # 确定在登录页
-    def is_login_page(self):
-        by_bottom = excel_cell_list(self.by_page_datas, "底部我的")
-        # 定义一个布尔值
-        is_bottom = self.driver.is_element_exist(by_bottom)
-        # 如果is_bottom未假时执行
-        if not is_bottom:
-            # 循环 is_bottom为假时执行
-            while not is_bottom:
-                self.driver.back()
-                is_bottom = self.driver.is_element_exist(by_bottom)
-        else:
-            self.driver.click_element(self.by_page_datas, "底部我的")
-
-    # 手机号登录
-    def login_phone_step(self, phone, code) -> str:
-        self.driver.click_element(self.by_page_datas, "点击登录")
-        element = self.driver.get_find_element(excel_cell_list(self.by_page_datas, "点击协议"))
-        if not element.is_selected():
-            self.driver.click_element(self.by_page_datas, "点击协议")
-        self.driver.click_element(self.by_page_datas, "手机登录")
-        self.driver.click_element(self.by_page_datas, "点击区号")
-        self.driver.click_element(self.by_page_datas, "选择地区")
-        self.driver.send_keys(self.by_page_datas, "输入号码", phone)
-        self.driver.click_element(self.by_page_datas, "获取验证")
-        self.driver.send_keys(self.by_page_datas, "输入验证", code)
-        self.driver.click_element(self.by_page_datas, "提交登录")
-        # 获取提示文本
+    def page_info(self):
         try:
-            self.driver.get_toast_text("登录是否")
+            # 当前页面 url
+            page_url = self.page_driver.get_url()
+            # 当前页面 title
+            page_title = self.page_driver.get_title()
+            INFO.logger.info("当前页面url:{},页面title:{}".format(page_url, page_title))
+        except Exception as e:
+            INFO.logger.error("获取页面信息失败,可能为app".format())
+        INFO.logger.info("当前页面元素信息:{}".format(self.page_bys))
+        pass
+
+
+    def is_upgrade(self):
+        """
+        判断是否升级
+        :return:
+        """
+        click_element_ignore(self.page_ele("提示升级"))
+
+    def is_home_page(self):
+        """
+        判断是否是首页
+        :return:
+        """
+        # 判断底部我的元素是否显示
+        ele = self.page_ele("底部我的").is_displayed()
+        if not ele:
+            with not ele:
+                self.page_driver.back()
+                ele = self.page_ele("底部我的").is_displayed()
+        else:
+            click_element(self.page_ele("底部我的"))
+
+    def login_phone(self, phone, code) -> str:
+        """
+        手机号登录
+        :param phone:   手机号
+        :param code:    验证码
+        :return:    None
+        """
+        click_element(self.page_ele("点击登录"))
+        ele = self.page_ele("点击协议")
+        if not ele.is_selected():
+            click_element(ele)
+        click_element(self.page_ele("手机登录"))
+        click_element(self.page_ele("点击区号"))
+        click_element(self.page_ele("选择地区"))
+        input_element(self.page_ele("输入号码"), True, phone)
+        click_element(self.page_ele("获取验证"))
+        input_element(self.page_ele("输入验证"), True, code)
+        click_element(self.page_ele("提交登录"))
+        actual_text = "登录成功"
+        try:
+            self.page_driver.get_alert_text()
             actual_text = "登录失败"
         except Exception as e:
-            INFO.logger.info("未找到登录提示toast")
-            actual_text = "登录成功"
+            INFO.logger.info("未找到错误登录提示toast")
         return actual_text
 
-    # 首页签到按钮
+    # 首页签到
     def sign_in(self):
-        if self.driver.is_element_exist(excel_cell_list(self.by_page_datas, "首页签到")):
-            self.driver.click_element(self.by_page_datas, "首页签到")
-        else:
-            INFO.logger.info("未找到签到按钮")
+        """
+        首页签到
+        :return:
+        """
+        click_element_ignore(self.page_ele("首页签到"))
+

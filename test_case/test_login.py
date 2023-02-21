@@ -1,7 +1,7 @@
 import allure
 import pytest
 
-from driver.app_driver import app_conf
+from driver.conf_driver import conf_app
 from driver.app.app_driver import AppDriver
 from page_object.modules.fizz_an_login_m import LoginMod
 from utils.testdatas_tool.get_excel import GetExcel
@@ -21,7 +21,7 @@ class TestLoginFlow:
         :return:
         """
         # 启动app
-        driver_app = AppDriver(app_conf("android"))
+        driver_app = AppDriver(driver_app("android"))
         # 获取页面参数
         driver_page_by = GetExcel("test_data.xlsx", "login").get_excel_datas_call("by_element", 0)
         # 实例化登录模块保存by

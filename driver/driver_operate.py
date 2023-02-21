@@ -1,20 +1,31 @@
 """
 创建一个class，用于二次封装webdriver，实现一些常用的方法
 """
-from selenium import webdriver
+
 from conf.setting import root_path
-from utils.logging_tool.log_control import WARNING, INFO
+from utils.logging_tool.log_control import WARNING, INFO, ERROR
 from utils.time_tool.time_control import get_now_time_format
+from driver.conf_web import conf_webdriver
+from driver.conf_app import conf_appium
 
 
-class DriverBase:
+class DriverOperate:
     """
     二次封装webdriver
     """
 
     # 初始化
-    def __init__(self, driver: webdriver):
-        self.driver = driver
+    def __init__(self, driver_name):
+        """
+        初始化
+        :param driver_name:     driver名称
+        """
+        INFO.logger.info("初始化配置driver对象=>{},等待启动结果中~~~".format(driver_name))
+        if driver_name == "chrome" or driver_name == "firefox" or driver_name == "edge":
+            self.driver = conf_webdriver(driver_name)
+        elif driver_name == "android" or driver_name == "ios":
+            self.driver = conf_appium(driver_name)
+        self.driver.implicitly_wait(10)
 
     '''
         driver操作    ---------------------------------------------------
@@ -122,7 +133,7 @@ class DriverBase:
                 break
 
     # 获取提示框文本根据布尔参数确定是否点击'确定'按钮
-    def get_alert_text(self, is_click: bool) -> str:
+    def get_alert_text_click(self, is_click: bool) -> str:
         """
         获取提示框文本根据布尔参数确定是否点击'确定'按钮
         :param is_click:
@@ -137,6 +148,16 @@ class DriverBase:
             alert.dismiss()
         return text
 
+    # 获取提示框文本
+    def get_alert_text(self) -> str:
+        """
+        获取提示框文本
+        :return:
+        """
+        text = self.driver.switch_to.alert.text
+        INFO.logger.info("提示框文本=>{}".format(text))
+        return text
+
     def screenshot(self) -> None:
         """
         截全屏图
@@ -145,7 +166,10 @@ class DriverBase:
         # 获取screenshot文件夹相对路径
         screenshot_path = root_path() + "/files/screenshot/"
         # 获取该页面标题
-        title = self.driver.title
+        try:
+            title = self.driver.title
+        except Exception as e:
+            title = ""
         # 当前时间
         time = get_now_time_format()
         # 截屏并拼接title和time保存到screenshot文件夹下抛出异常
@@ -160,3 +184,8 @@ class DriverBase:
         :return:
         """
         self.driver.delete_all_cookies()
+
+
+if __name__ == '__main__':
+    qwe = DriverOperate("android")
+    qwe.screenshot()
