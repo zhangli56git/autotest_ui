@@ -42,7 +42,7 @@ def conf_webdriver(driver_name) -> webdriver:
         return driver
 
 if __name__ == '__main__':
-    conf_webdriver("chrome")
+    # conf_webdriver("chrome")
     conf_webdriver("firefox")
-    conf_webdriver("edge")
-    conf_webdriver("firefoxH5")
+    # conf_webdriver("edge")
+    # conf_webdriver("firefoxH5")

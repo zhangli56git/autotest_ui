@@ -1,7 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Time   : 2022/3/28 10:56
-# @Author : 余少琪
+
 """
 日志封装，可设置不同等级的日志颜色
 """
@@ -11,9 +8,7 @@ from typing import Text
 import colorlog
 import time
 
-from selenium.common import exceptions
-
-from conf.setting import path_sure
+from conf.setting import ensure_path_sep
 
 
 class LogHandler:
@@ -58,7 +53,7 @@ class LogHandler:
         # 把对象加到logger里
         self.logger.addHandler(screen_output)
         self.logger.addHandler(time_rotating)
-        self.log_path = path_sure('\\logs\\log.log')
+        self.log_path = ensure_path_sep('\\logs\\log.log')
 
     @classmethod
     def log_color(cls):
@@ -80,11 +75,11 @@ class LogHandler:
 
 
 now_time_day = time.strftime("%Y-%m-%d", time.localtime())
-INFO = LogHandler(path_sure(f"\\logs\\info-{now_time_day}.log"), level='info')
-ERROR = LogHandler(path_sure(f"\\logs\\error-{now_time_day}.log"), level='error')
-DEBUG = LogHandler(path_sure(f"\\logs\\debug-{now_time_day}.log"), level='debug')
-CRITICAL = LogHandler(path_sure(f"\\logs\\critical-{now_time_day}.log"), level='critical')
-WARNING = LogHandler(path_sure(f'\\logs\\warning-{now_time_day}.log'), level='warning')
+INFO = LogHandler(ensure_path_sep(f"\\logs\\info-{now_time_day}.log"), level='info')
+ERROR = LogHandler(ensure_path_sep(f"\\logs\\error-{now_time_day}.log"), level='error')
+DEBUG = LogHandler(ensure_path_sep(f"\\logs\\debug-{now_time_day}.log"), level='debug')
+CRITICAL = LogHandler(ensure_path_sep(f"\\logs\\critical-{now_time_day}.log"), level='critical')
+WARNING = LogHandler(ensure_path_sep(f'\\logs\\warning-{now_time_day}.log'), level='warning')
 
 if __name__ == '__main__':
     INFO.logger.info("info")

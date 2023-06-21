@@ -3,7 +3,7 @@
 """
 
 from conf.setting import root_path
-from utils.logging_tool.log_control import WARNING, INFO, ERROR
+from utils.logging_tool.log_control import WARNING, INFO
 from utils.time_tool.time_control import get_now_time_format
 from driver.conf_web import conf_webdriver
 from driver.conf_app import conf_appium

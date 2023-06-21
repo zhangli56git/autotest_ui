@@ -1,9 +1,8 @@
-import time
+
 
 from driver.driver_element import *
 from page_object.base_page import BasePage
 from utils.logging_tool.log_control import INFO
-from utils.testdatas_tool.set_datas import list_bys
 
 
 class LoginStep(BasePage):

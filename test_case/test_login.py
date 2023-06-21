@@ -1,7 +1,6 @@
 import allure
 import pytest
 
-from driver.conf_driver import conf_app
 from driver.app.app_driver import AppDriver
 from page_object.modules.fizz_an_login_m import LoginMod
 from utils.testdatas_tool.get_excel import GetExcel
